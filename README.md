@@ -1,6 +1,6 @@
-# test-project
+# Vuetify Parallax Theme
 
-> A Vue.js project
+> A Vue.js project showcasing Vuetify Parallax Theme in a multi component project structure.
 
 ## Build Setup
 
