@@ -8,13 +8,33 @@ import "vuetify/dist/vuetify.min.css";
 import "vue-material-design-icons/styles.css";
 import VueAxios from "vue-axios";
 import axios from "axios";
+import VueI18n from "vue-i18n";
 import MainPage from "./components/MainPage.vue";
 
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.use(VueI18n);
 
 Vue.config.productionTip = false;
+
+const messages = {
+  en: {
+    message: {
+      hello: "Your Logo"
+    }
+  },
+  fr: {
+    message: {
+      hello: "Votre Marque"
+    }
+  }
+};
+// Create VueI18n instance with options
+const i18n = new VueI18n({
+  locale: "en", // set locale
+  messages // set locale messages
+});
 
 const routes = [
   {
@@ -33,5 +53,6 @@ const router = new VueRouter({
 new Vue({
   el: "#app",
   render: h => h(App),
-  router
+  router,
+  i18n
 }).$mount("#app");

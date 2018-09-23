@@ -4,11 +4,13 @@
 
 <script>
 import MainPage from "./components/MainPage";
+import LocaleSwitcher from "./components/LocaleSwitcher";
 
 export default {
   name: "App",
   components: {
-    MainPage
+    MainPage,
+    LocaleSwitcher
   }
 };
 </script>

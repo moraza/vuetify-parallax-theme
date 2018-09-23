@@ -1,7 +1,8 @@
 <template>
   <v-layout column nowrap>
     <v-toolbar class="white">
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title v-text="$t('message.hello')"></v-toolbar-title>
+      <LocaleSwitcher :locales="['en', 'nl']" :show-full="true" ></LocaleSwitcher>
     </v-toolbar>
     <v-content>
       <section>
