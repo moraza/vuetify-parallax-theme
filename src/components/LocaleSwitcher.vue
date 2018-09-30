@@ -32,21 +32,31 @@ const localeStrings = [
 ];
 
 Vue.config.lang = VueCookie.get("locale") || "en";
-console.log(
-  "Locale from cookie = " +
-    Vue.config.lang +
-    ": language = " +
-    localeStrings[Vue.config.lang]
-);
+
+function extractLocaleItemByString(locale, getNameOnly) {
+  var result = 'Not found';
+  localeStrings.forEach(function(item) {
+    if(item.code === locale) {
+      if(getNameOnly)
+      result = item.name;
+      else
+      result = item;
+    }
+  })
+  return result;
+}
 
 export default {
   name: "LocaleSwitcher",
   data: function() {
     return {
       activeLocale: Vue.config.lang,
-      localeSelected: localeStrings[0],
+      localeSelected: extractLocaleItemByString(Vue.config.lang, false),
       localeList: localeStrings
     };
+  },
+  mounted() {
+    this.$i18n.locale = Vue.config.lang;
   },
   methods: {
     setLocale: function() {
@@ -55,15 +65,6 @@ export default {
       this.activeLocale = locale.code;
       this.$cookie.set("locale", locale.code);
       this.$i18n.locale = Vue.config.lang;
-      console.log(
-        "New locale = " +
-          Vue.config.lang +
-          ": language = " +
-          locale.name
-      );
-    },
-    getLanguageString: function(locale) {
-      return this.showFull ? localeStrings[locale] : locale;
     }
   }
 };
