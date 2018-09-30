@@ -6,6 +6,7 @@ import VueRouter from "vue-router";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import "vue-material-design-icons/styles.css";
+import VueMaterial from "vue-material";
 import VueAxios from "vue-axios";
 import axios from "axios";
 import VueI18n from "vue-i18n";
@@ -15,6 +16,7 @@ Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 Vue.use(Vuetify);
 Vue.use(VueI18n);
+Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
 
@@ -55,4 +57,4 @@ new Vue({
   render: h => h(App),
   router,
   i18n
-}).$mount("#app");
+});

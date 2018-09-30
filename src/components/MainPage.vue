@@ -2,9 +2,10 @@
   <v-layout column nowrap>
     <v-toolbar class="white">
       <v-toolbar-title v-text="$t('message.hello')"></v-toolbar-title>
-      <LocaleSwitcher :locales="['en', 'nl']" :show-full="true" ></LocaleSwitcher>
+      <v-spacer></v-spacer>
+      <LocaleSwitcher></LocaleSwitcher>
     </v-toolbar>
-    <v-content>
+    <v-content style="z-index: -100">
       <section>
         <v-parallax :src="heroImg" height="600">
           <v-layout
@@ -20,7 +21,8 @@
               class="blue lighten-2 mt-5"
               dark
               large
-              href="/pre-made-themes"
+              href="#"
+              @click="setLocaleToFr()"
             >
               Get Started
             </v-btn>
@@ -186,14 +188,27 @@
 </template>
 
 <script>
+import LocaleSwitcher from "./LocaleSwitcher";
+
 export default {
   name: "MainPage",
+  components: {
+    LocaleSwitcher
+  },
   data() {
     return {
       title: "Your Logo",
       heroImg: require("../assets/hero.jpeg"),
       sectionImg: require("../assets/section.jpg")
     };
+  },
+  mounted() {
+    this.$locale = 'fr';
+  },
+  methods: {
+    setLocaleToFr() {
+      this.$locale='fr';
+    }
   }
 };
 </script>

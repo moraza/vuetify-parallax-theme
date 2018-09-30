@@ -1,17 +1,16 @@
 <template>
-  <div class="locale-switcher">
-    <!-- {{ initLocale() }} -->
-    <b-nav-item-dropdown :dropup="dropup" :text="dropdownLbl" right>
-      <b-dropdown-item
-        class="locale-link"
-        v-for="locale in locales"
-        :key="locale.id"
-        @click="setLocale(locale)"
-        :class="{ 'is-current': locale === activeLocale }"
-        href="#">
-        {{ getLanguageString(locale) }}
-      </b-dropdown-item>
-    </b-nav-item-dropdown>
+  <div data-app class="locale-switcher">
+      <v-select
+        v-model="localeSelected"
+        :items="localeList"
+        item-text="name"
+        item-value="code"
+        label="Locale"
+        persistent-hint
+        return-object
+        single-line
+        @change="setLocale"
+      ></v-select>
   </div>
 </template>
 
@@ -21,14 +20,16 @@ import Vue from "vue";
 import VueCookie from "vue-cookie";
 Vue.use(VueCookie);
 
-const localeStrings = {
-  en: "English",
-  nl: "Nederlands",
-  ru: "Russian",
-  ua: "Ukrainian",
-  fr: "Français",
-  de: "Deutsch"
-};
+const localeStrings = [
+ {
+   code:   "en",
+   name: "English"
+ },
+ {
+  code: "fr",
+  name: "Français"
+ }
+];
 
 Vue.config.lang = VueCookie.get("locale") || "en";
 console.log(
@@ -40,39 +41,25 @@ console.log(
 
 export default {
   name: "LocaleSwitcher",
-  props: {
-    locales: {
-      type: Array,
-      default: ["en"]
-    },
-    showFull: Boolean,
-    dropup: Boolean,
-    locLabel: {
-      type: String,
-      default: ""
-    }
-  },
   data: function() {
     return {
-      activeLocale: Vue.config.lang
+      activeLocale: Vue.config.lang,
+      localeSelected: localeStrings[0],
+      localeList: localeStrings
     };
   },
-  computed: {
-    dropdownLbl: function() {
-      return this.locLabel ? this.locLabel : this.activeLocale;
-    }
-  },
   methods: {
-    setLocale: function(locale) {
-      Vue.config.lang = locale;
-      this.activeLocale = locale;
-      this.$cookie.set("locale", locale);
+    setLocale: function() {
+      var locale = this.localeSelected;
+      Vue.config.lang = locale.code;
+      this.activeLocale = locale.code;
+      this.$cookie.set("locale", locale.code);
       this.$i18n.locale = Vue.config.lang;
       console.log(
         "New locale = " +
           Vue.config.lang +
           ": language = " +
-          localeStrings[Vue.config.lang]
+          locale.name
       );
     },
     getLanguageString: function(locale) {
